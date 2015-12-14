@@ -41,4 +41,4 @@ admin.env
 
 # Visual Studio Code
 typings
-.vscode
+.vscode/*

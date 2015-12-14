@@ -7,7 +7,7 @@
 			"request": "launch",
 			"program": "/usr/local/bin/sl-fr",
 			"stopOnEntry": false,
-			"cwd": "./back/modules/api/keyword/",
+			"cwd": "./back/modules/api/features/",
 			"runtimeExecutable": "",
 			"runtimeArgs": [],
 			"env": {
