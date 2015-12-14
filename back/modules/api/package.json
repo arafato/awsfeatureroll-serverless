@@ -1,0 +1,25 @@
+{
+  "name": "api",
+  "version": "0.0.1",
+  "description": "Dependencies for a Serverless Module written in Node.js",
+  "author": "me",
+  "license": "MIT",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/"
+  },
+  "keywords": [],
+  "devDependencies": {},
+  "dependencies": {
+    "archiver": "^0.20.0",
+    "aws-sdk": "^2.2.22",
+    "ejs": "^2.3.4",
+    "memory-streams": "^0.1.0",
+    "moment": "^2.10.6",
+    "mysql": "^2.9.0",
+    "serverless-helpers-js": "~0.0.3",
+    "tmp": "0.0.28",
+    "uuid": "^2.0.1"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "name": "awsfeatureroll-serverless",
+  "version": "0.0.1",
+  "profile": "serverless-0",
+  "location": "https://github.com/...",
+  "author": "",
+  "description": "",
+  "domain": "awsfeatureroll.com",
+  "stages": {
+    "development": [
+      {
+        "region": "eu-west-1",
+        "iamRoleArnLambda": "arn:aws:iam::797996333664:role/awsfeatureroll-serverless-developmen-IamRoleLambda-1JI02E59ZVFNC",
+        "regionBucket": "serverless.euwest1.awsfeatureroll.com"
+      }
+    ]
+  },
+  "custom": {},
+  "plugins": []
+}

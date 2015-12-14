@@ -1,0 +1,6 @@
+{
+  "startdate": "1420066800",
+  "enddate": "1422831600",
+  "slideBucket": "serverless.euwest1.awsfeatureroll.com",
+  "s3Key": "slideheap/testdeck.zip"
+}

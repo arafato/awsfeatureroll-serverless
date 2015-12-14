@@ -1,0 +1,37 @@
+{
+  "functions": {
+    "CronImportfeatures": {
+      "envVars": [],
+      "custom": {
+        "excludePatterns": []
+      },
+      "handler": "modules/cron/importfeatures/handler.handler",
+      "timeout": 6,
+      "memorySize": 1024,
+      "endpoints": {
+        "cron/importfeatures": {
+          "method": "GET",
+          "authorizationType": "none",
+          "apiKeyRequired": false,
+          "requestParameters": {},
+          "requestTemplates": {
+            "application/json": ""
+          },
+          "responses": {
+            "400": {
+              "statusCode": "400"
+            },
+            "default": {
+              "statusCode": "200",
+              "responseParameters": {},
+              "responseModels": {},
+              "responseTemplates": {
+                "application/json": ""
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

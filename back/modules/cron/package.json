@@ -1,0 +1,19 @@
+{
+  "name": "cron",
+  "version": "0.0.1",
+  "description": "Dependencies for a Serverless Module written in Node.js",
+  "author": "me",
+  "license": "MIT",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/"
+  },
+  "keywords": [],
+  "devDependencies": {},
+  "dependencies": {
+    "aws-featureroll-parser": "^1.0.0",
+    "mysql": "^2.9.0",
+    "serverless-helpers-js": "~0.0.3"
+  }
+}
