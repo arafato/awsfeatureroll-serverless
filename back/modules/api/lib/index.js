@@ -9,11 +9,8 @@ var memStream = require('memory-streams');
 var AWS = require('aws-sdk');
 var helpers = require('./queryHelpers.js')
 
-
-// TODO: Replace with env vars
-var slideBucket = 'serverless.euwest1.awsfeatureroll.com'; 
-AWS.config.region = 'eu-west-1';
-var s3 = new AWS.S3({ region: 'eu-west-1' });
+var slideBucket = process.env.SLIDE_BUCKET.replace('#region#', (AWS.config.region || 'eu-west-1').replace(/-/g, '')); 
+var s3 = new AWS.S3();
 var lambda = new AWS.Lambda();
 
 function getByKeyword(connection, queryParams, success, error) {
@@ -21,7 +18,7 @@ function getByKeyword(connection, queryParams, success, error) {
   if (queryParams.q === undefined) {
     throw "Missing keyword parameter. Use q=YOUR-KEYWORD"
   }
-
+  console.log(AWS.config.region);
   var params = { startdate: undefined, enddate: undefined, category: undefined };
   helpers.sanitizeParams(params, queryParams);
   var queryString = helpers.buildQueryString(params.startdate, params.enddate, params.category, queryParams.q);
@@ -90,10 +87,10 @@ function getSlideUrl(queryParams, success, error) {
       };
       
       var lambdaParams = {
-        FunctionName: 'arn:aws:lambda:eu-west-1:797996333664:function:awsfeatureroll-serverless-ApiCreateslidedeck', // TODO: Replace with env var
+        FunctionName: process.env.API_CREATESLIDEDECK_ARN,
         InvocationType: 'Event',
         Payload: JSON.stringify(payload),
-        Qualifier: 'development' //TODO: Replace with env var
+        Qualifier: process.env.SERVERLESS_STAGE
       };
       
       // If successfull returns 202 statuscode
@@ -113,7 +110,6 @@ function getSlideUrl(queryParams, success, error) {
 function createSlidedeck(connection, event, success, error) {
   var params = { startdate: event.startdate, enddate: event.enddate, category: event.category };
   var queryString = helpers.buildQueryString(params.startdate, params.enddate, params.category);
-  console.log("Querystring: " + queryString);
   params.slideBucket = event.slideBucket;
   params.s3Key = event.s3Key;
 
@@ -173,7 +169,6 @@ function archiveSlidedeck(data, params, success, error) {
     ]);
     archive.append(htmlStream, { name: 'index.html' });
     archive.finalize();
-    AWS.config.update({"region": "eu-west-1"})
     var s3Slides = new AWS.S3({ params: {region:'eu-west-1', Bucket:params.slideBucket, Key: params.s3Key}});    
     s3Slides.upload({Body: archive}).
     send(function(err, data) {
