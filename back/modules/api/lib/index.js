@@ -9,7 +9,8 @@ var memStream = require('memory-streams');
 var AWS = require('aws-sdk');
 var helpers = require('./queryHelpers.js')
 
-var slideBucket = process.env.SLIDE_BUCKET.replace('#region#', (AWS.config.region || 'eu-west-1').replace(/-/g, '')); 
+var region = AWS.config.region || 'eu-west-1';
+var slideBucket = process.env.SLIDE_BUCKET.replace('#region#', region.replace(/-/g, '')); 
 var s3 = new AWS.S3();
 var lambda = new AWS.Lambda();
 
@@ -58,7 +59,7 @@ function generateSlideLink(params) {
 
 function checkSlidedeck(name, cb)
 {
-  s3.getObject({ Bucket: 'serverless.euwest1.awsfeatureroll.com', Key: name }, function(err, data) { 
+  s3.getObject({ Bucket: slideBucket, Key: name }, function(err, data) { 
     cb((err) ? false : true);
   });
 }
@@ -169,7 +170,7 @@ function archiveSlidedeck(data, params, success, error) {
     ]);
     archive.append(htmlStream, { name: 'index.html' });
     archive.finalize();
-    var s3Slides = new AWS.S3({ params: {region:'eu-west-1', Bucket:params.slideBucket, Key: params.s3Key}});    
+    var s3Slides = new AWS.S3({ params: {region: region, Bucket: params.slideBucket, Key: params.s3Key}});    
     s3Slides.upload({Body: archive}).
     send(function(err, data) {
       if (err) return error(err);
