@@ -57,12 +57,16 @@ function importFeatures(event, cb) {
 		getLastTimestamp(function (currentTimestamp) {
 			for (var i = 0; i < results.length; ++i) {
 
-				console.log(results[i].date + " <= " + currentTimestamp);
 				if (results[i].timestamp <= currentTimestamp) {
-
-					insertNewFeatures(results.splice(0, i));
+                	insertNewFeatures(results.splice(0, i));
 					break;
 				}
+                // If the last timestamp of our array is still greater than the last timestamp in our DB
+                // then years have changed and we need to add the entire array to the DB.
+                else if (i == results.length - 1 && results[i].timestamp > currentTimestamp) {
+                    insertNewFeatures(results.splice(0, i));
+					break;
+                }
 			}
 
 			connection.end(function (err) {
